@@ -45,17 +45,6 @@ public class MovieServiceImpl implements MovieService {
 
     try {
       Response<Movie> movieResponse = callMovie.execute();
-      Movie movie = movieResponse.body();
-
-      MovieManual movieManual = new MovieManual();
-      movieManual.setAdult(movie.getAdult());
-      movieManual.setId(movie.getId());
-      movieManual.setBudget(movie.getBudget());
-      movieManual.setLanguage(movie.getOriginalLanguage());
-      movieManual.setImdbId(movie.getImdbId());
-      movieManual.setTitle(movie.getOriginalTitle());
-      movieRepository.save(new Movie(movieManual));
-
       return movieResponse.body();
 
     } catch (IOException e) {
@@ -71,15 +60,6 @@ public class MovieServiceImpl implements MovieService {
 //          return;
 //        }
 //
-//        Movie movie = response.body();
-//        MovieManual movieManual = new MovieManual();
-//        movieManual.setAdult(movie.getAdult());
-//        movieManual.setId(movie.getId());
-//        movieManual.setBudget(movie.getBudget());
-//        movieManual.setLanguage(movie.getOriginalLanguage());
-//        movieManual.setImdbId(movie.getImdbId());
-//        movieManual.setTitle(movie.getOriginalTitle());
-//
 //        movieRepository.save(new Movie(movieManual));
 //        System.out.println(movie.toString());
 //      }
@@ -91,6 +71,19 @@ public class MovieServiceImpl implements MovieService {
 //    });
 
   }
+
+
+
+//  Movie movie = movieResponse.body();
+//
+//  MovieManual movieManual = new MovieManual();
+//      movieManual.setAdult(movie.getAdult());
+//      movieManual.setId(movie.getId());
+//      movieManual.setBudget(movie.getBudget());
+//      movieManual.setLanguage(movie.getOriginalLanguage());
+//      movieManual.setImdbId(movie.getImdbId());
+//      movieManual.setTitle(movie.getOriginalTitle());
+//      movieRepository.save(new Movie(movieManual));
 
   @Override
   public void save(Movie movie) {

@@ -43,7 +43,13 @@ public class SecurityConfiguration {
         .authorities("READ", "ROLE_USER")
         .build();
 
-    return new InMemoryUserDetailsManager(user, admin);
+    UserDetails low = User.withDefaultPasswordEncoder()
+        .username("low")
+        .password("pass")
+        .authorities("LOW", "ROLE_LOW")
+        .build();
+
+    return new InMemoryUserDetailsManager(user, admin, low);
   }
 
   @Bean
@@ -51,7 +57,8 @@ public class SecurityConfiguration {
     return http
         .csrf(csrf -> csrf.disable())
         .authorizeRequests(auth -> auth
-            .antMatchers("/token").hasRole("USER")
+            .antMatchers("/token").hasAnyRole("USER", "ADMIN", "LOW")
+            .antMatchers("/500").hasAuthority("SCOPE_LOW")
             .anyRequest().hasAuthority("SCOPE_READ")
         )
         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
