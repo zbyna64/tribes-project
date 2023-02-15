@@ -5,8 +5,10 @@ import com.gfa.springadvanced.models.fromJson.Movie;
 import com.gfa.springadvanced.services.MovieService;
 import com.gfa.springadvanced.services.MovieServiceAPI;
 import com.gfa.springadvanced.services.MovieServiceImpl;
+import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +37,11 @@ public class MainController {
   @GetMapping("/list")
   public List<Movie> list() {
     return movieService.listAllMovies();
+  }
+
+  @GetMapping("/home")
+  public String home(Authentication authentication) {
+    return "hello " + authentication.getName();
   }
 
 }
