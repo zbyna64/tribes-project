@@ -4,6 +4,7 @@ import static org.springframework.security.config.Customizer.*;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import javax.crypto.spec.SecretKeySpec;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +26,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
+
+  private final AuthenticationProviderConfig authenticationProviderConfig;
+
   @Value("${jwt.key}")
   private String jwtKey;
+
+  @Autowired
+  public SecurityConfiguration(AuthenticationProviderConfig authenticationProviderConfig) {
+    this.authenticationProviderConfig = authenticationProviderConfig;
+  }
 
   @Bean
   public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
@@ -65,7 +74,8 @@ public class SecurityConfiguration {
         )
         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
         .sessionManagement(
-            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+        .authenticationProvider(authenticationProviderConfig)
         .formLogin()
         .and()
         .httpBasic(withDefaults())
