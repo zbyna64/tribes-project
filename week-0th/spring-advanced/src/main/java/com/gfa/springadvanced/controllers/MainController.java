@@ -1,31 +1,25 @@
 package com.gfa.springadvanced.controllers;
 
-import com.gfa.springadvanced.models.MovieManual;
 import com.gfa.springadvanced.models.fromJson.Movie;
 import com.gfa.springadvanced.services.MovieService;
-import com.gfa.springadvanced.services.MovieServiceAPI;
-import com.gfa.springadvanced.services.MovieServiceImpl;
-import java.security.Principal;
+import com.gfa.springadvanced.services.TokenService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @RestController
 public class MainController {
 
   private final MovieService movieService;
+  private final TokenService tokenService;
 
   @Autowired
-  public MainController(MovieService movieService) {
+  public MainController(MovieService movieService, TokenService tokenService) {
     this.movieService = movieService;
+    this.tokenService = tokenService;
   }
 
 
@@ -41,6 +35,7 @@ public class MainController {
 
   @GetMapping("/home")
   public String home(Authentication authentication) {
+    String token = tokenService.generateToken(authentication);
     return "hello " + authentication.getName();
   }
 
