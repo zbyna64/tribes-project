@@ -36,7 +36,7 @@ public class MainController {
   @GetMapping("/home")
   public String home(Authentication authentication) {
     String token = tokenService.generateToken(authentication);
-    return "hello " + authentication.getName();
+    return "hello " + authentication.getName() + " " + token;
   }
 
 }
