@@ -28,6 +28,7 @@ public class AuthenticationProviderConfig implements AuthenticationProvider {
       throw new AuthenticationException("Could not login") {
       };
     }
+
     UserDetails user = inMemoryUserDetailsManager.loadUserByUsername(username);
 
     return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
