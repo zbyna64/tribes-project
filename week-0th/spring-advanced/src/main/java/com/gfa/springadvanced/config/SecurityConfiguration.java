@@ -28,7 +28,6 @@ public class SecurityConfiguration {
   @Value("${jwt.key}")
   private String jwtKey;
 
-a
   @Bean
   public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
     UserDetails admin = User.withDefaultPasswordEncoder()

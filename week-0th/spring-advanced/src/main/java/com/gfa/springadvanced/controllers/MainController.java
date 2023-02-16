@@ -1,6 +1,6 @@
 package com.gfa.springadvanced.controllers;
 
-import com.gfa.springadvanced.models.User;
+import com.gfa.springadvanced.config.AuthenticationProviderConfig;
 import com.gfa.springadvanced.models.fromJson.Movie;
 import com.gfa.springadvanced.services.MovieService;
 import com.gfa.springadvanced.services.TokenService;
@@ -19,13 +19,15 @@ public class MainController {
   private final MovieService movieService;
   private final TokenService tokenService;
   private final UserService userService;
+  private final AuthenticationProviderConfig authenticationProvider;
 
   @Autowired
   public MainController(MovieService movieService, TokenService tokenService,
-      UserService userService) {
+      UserService userService, AuthenticationProviderConfig authenticationProvider) {
     this.movieService = movieService;
     this.tokenService = tokenService;
     this.userService = userService;
+    this.authenticationProvider = authenticationProvider;
   }
 
 
@@ -41,9 +43,8 @@ public class MainController {
 
   @GetMapping("/home")
   public String home(Authentication authentication) {
-    UserDetails user = userService.loadUserByUsername(authentication.getName());
-//    String token = tokenService.generateToken(authentication);
-    return "hello " + user.getUsername() + user.getPassword();
+    String token = tokenService.generateToken(authentication);
+    return "hello " + authentication.getName() + authentication.getCredentials();
   }
 
 }
