@@ -59,7 +59,6 @@ public class SecurityConfiguration {
         .authorizeRequests(auth -> auth
             .antMatchers("/token").permitAll()
             .antMatchers("/home").hasRole("USER")
-//            .antMatchers("/token").hasAnyRole("USER", "ADMIN", "LOW")
             .antMatchers("/500").hasAuthority("SCOPE_ROLE_LOW")
             .antMatchers("/501").hasAuthority("SCOPE_ROLE_USER")
             .antMatchers("/502").hasAuthority("SCOPE_ROLE_ADMIN")
