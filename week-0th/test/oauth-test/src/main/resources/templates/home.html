@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container unauthenticated">
+    <div>
+        With Google: <a href="/oauth2/authorization/google">click here</a>
+    </div>
+</div>
+
+<div>
+    <p th:text="${user.getPrincipal()}"></p>
+</div>
+</body>
+</html>
