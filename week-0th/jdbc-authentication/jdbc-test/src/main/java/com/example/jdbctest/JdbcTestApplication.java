@@ -27,10 +27,10 @@ public class JdbcTestApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    System.out.println("Password encoded: " );
-    System.out.println(passwordEncoder.encode("pass"));
-
-    userRepository.save(new User("zbyna", "$2a$10$EeTa9v4A3.7ZVJHm/6Bh4.s2pBu7kOeaOlahmZRmxpKZMObob.qS2", "ROLE_USER,READ"));
+//    System.out.println("Password encoded: " );
+//    System.out.println(passwordEncoder.encode("pass"));
+//
+//    userRepository.save(new User("zbyna", "$2a$10$EeTa9v4A3.7ZVJHm/6Bh4.s2pBu7kOeaOlahmZRmxpKZMObob.qS2", "ROLE_USER,READ"));
 
   }
 }

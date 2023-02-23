@@ -6,10 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class MainController {
 
   private final UserService userService;
@@ -20,17 +26,29 @@ public class MainController {
   }
 
   @GetMapping("/")
+  @ResponseBody
   public String home(Authentication authentication) {
     return "hi, " + authentication.getPrincipal().toString();
   }
 
-  @GetMapping("/login")
-  public String login() {
+  @GetMapping("/register")
+  public String register(Model model) {
+    return "register";
+  }
 
-    return "Null";
+  @PostMapping("/register")
+  public String registerUser(@RequestParam String username, @RequestParam String password) {
+    User user = new User(username, password);
+    try {
+      userService.saveUser(user);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    return "redirect:/login";
   }
 
   @GetMapping("/user")
+  @ResponseBody
   public ResponseEntity user(Authentication authentication) {
 
     try {

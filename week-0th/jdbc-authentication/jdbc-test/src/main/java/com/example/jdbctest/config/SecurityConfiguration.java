@@ -44,12 +44,12 @@ public class SecurityConfiguration {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
     return http.csrf(csrf -> csrf.disable())
-        .authorizeRequests(auth ->
-            auth.anyRequest().authenticated())
+        .authorizeRequests(auth -> auth
+          .antMatchers("/register").permitAll()
+              .anyRequest().authenticated()
+        )
         .userDetailsService(userService)
         .formLogin()
-        .and()
-        .oauth2Login()
         .and()
         .build();
   }
